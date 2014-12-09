@@ -1,0 +1,21 @@
+<?php
+class MyStandard_Sniffs_Files_DissalowMethodsLongerThan50 implements PHP_CodeSniffer_Sniff
+{
+    public function register()
+    {
+        return array(T_OPEN_TAG);
+
+    }
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+	
+        if (strlen($tokens[$stackPtr]['content']) > 50) {
+            $error = 'Line exceeds 50 symbols;';
+            $data  = array(trim($tokens[$stackPtr]['content']));
+            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
+        }
+    }
+}
+?>
+
